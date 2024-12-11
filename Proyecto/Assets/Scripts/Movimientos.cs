@@ -27,40 +27,61 @@ public class Movimientos : MonoBehaviour
         boxCollider.offset = spriteRenderer.sprite.bounds.center;
 
         // Mover a la izquierda con la tecla left
-        if (Input.GetKey("left"))
-        {
+        if (Input.GetKey("left"))  {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-700f * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("moving", true);
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            if (Input.GetKey("space")) {
+            gameObject.GetComponent<Animator>().SetBool("attack", true);
+            isAttacking = true; 
+            
+             }
+
         }
 
         // Mover a la derecha con la tecla right
-        if (Input.GetKey("right"))
-        {
+        if (Input.GetKey("right")) {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(700f * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("moving", true);
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
+
+        if (Input.GetKey("space")){
+            gameObject.GetComponent<Animator>().SetBool("attack", true);
+            isAttacking = true; 
+            
+        }
         }
 
         // Si no se presionan teclas de movimiento
         if (!Input.GetKey("left") && !Input.GetKey("right"))
         {
             gameObject.GetComponent<Animator>().SetBool("moving", false);
+            gameObject.GetComponent<Animator>().SetBool("attack", false);
         }
 
         // Saltar al presionar up si está en el suelo
         if (Input.GetKeyDown("up") && isGrounded)
         {
             gameObject.GetComponent<Animator>().SetBool("jump", true);
+            if (Input.GetKey("space")) {
+            gameObject.GetComponent<Animator>().SetBool("attack", true);
+            isAttacking = true; 
+            
+            }
             isGrounded = false; // Evitar múltiples saltos en el aire
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 600f));
         }
 
-        if (Input.GetKeyDown("down") && isAttacking)
+        if (Input.GetKey("space"))
         {
             gameObject.GetComponent<Animator>().SetBool("attack", true);
             isAttacking = true; 
             
+        }
+
+        if (!Input.GetKey("space") && isAttacking)
+        {
+            gameObject.GetComponent<Animator>().SetBool("attack", false);
         }
     }
 
