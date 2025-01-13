@@ -50,6 +50,10 @@ public class Movimientos : MonoBehaviour
             isAttacking = true; 
             
         }
+        //deslizarse de rodillas si se presiona la tecla down
+        if(  Input.GetKey("right") && Input.GetKey("down")){
+            gameObject.GetComponent<Animator>().SetBool("launching", true);
+        }
         }
 
         // Si no se presionan teclas de movimiento
@@ -83,6 +87,22 @@ public class Movimientos : MonoBehaviour
         {
             gameObject.GetComponent<Animator>().SetBool("attack", false);
         }
+
+        // Deslizarse/arrodillarse al presionar down mientras se mueve
+        if (Input.GetKey("down"))
+        {
+            animator.SetBool("launching", true);
+        }
+        else
+        {
+            animator.SetBool("launching", false);
+        }
+        //deslizarse de rodillas si se presiona la tecla down
+        // if( Input.GetKey("down") && Input.GetKey("right") && isGrounded){
+        //     gameObject.GetComponent<Animator>().SetBool("launching", true);
+        //     gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 600f));
+        // }
+        
     }
 
     // Detectar colisión con el suelo
@@ -92,7 +112,9 @@ public class Movimientos : MonoBehaviour
         {
             isGrounded = true;
             gameObject.GetComponent<Animator>().SetBool("jump", false); // Desactivar animación de salto
-            
+            gameObject.GetComponent<Animator>().SetBool("launching", false); //Desactivar la animacion de deslizarse si no se presiona la tecla
         }
     }
+
+
 }
