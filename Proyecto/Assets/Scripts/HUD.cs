@@ -7,10 +7,23 @@ public class HUD : MonoBehaviour
 {
     public GameManager gameManager;
     public TextMeshProUGUI puntos;
-
+    public GameObject[]vidas;
+    public HUD hud;
     // Update is called once per frame
     void Update()
     {
         puntos.text = gameManager.PuntosTotales.ToString();
+    }
+
+    public void ActualizarPuntos(int PuntosTotales){
+        puntos.text=PuntosTotales.ToString();
+    }
+
+    public void DesactivarVida(int indice){
+        vidas[indice].SetActive(false);
+    }
+
+    public void ActivarVida(int indice){
+        vidas[indice].SetActive(true);
     }
 }
